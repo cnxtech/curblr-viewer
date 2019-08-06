@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>CurbLR Viewer | SharedStreets</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+        <script src='https://api.mapbox.com/mapbox-gl-js/v1.2.0/mapbox-gl.js'></script>
+        <link href='https://api.mapbox.com/mapbox-gl-js/v1.2.0/mapbox-gl.css' rel='stylesheet' />
+        <script src='https://unpkg.com/mapbox-gl-compare@0.2.1/dist/mapbox-gl-compare.js'></script>
+        <link href='https://unpkg.com/mapbox-gl-compare@0.2.1/dist/mapbox-gl-compare.css' rel='stylesheet' />
+    </head>
+    <body style="height: 100%; padding: 0">
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+        <div id='before-map' style='position: absolute; top: 0; bottom: 0; width: 100%;'></div>
+        <div id='matched-map' style='position: absolute; top: 0; bottom: 0; width: 100%;'></div>
+        <script>
+            window.localStorage.setItem("MapboxAccessToken", "pk.eyJ1IjoidHJhbnNwb3J0cGFydG5lcnNoaXAiLCJhIjoiY2ptOTN5N3Q3MHN5aDNxbGs2MzhsN3dneiJ9.K4j9mXsvfGCYtM8YouwCKg");
+            mapboxgl.accessToken = "pk.eyJ1IjoidHJhbnNwb3J0cGFydG5lcnNoaXAiLCJhIjoiY2ptOTN5N3Q3MHN5aDNxbGs2MzhsN3dneiJ9.K4j9mXsvfGCYtM8YouwCKg";
+            var beforeMap = new mapboxgl.Map({
+                container: 'before-map',
+                style: 'mapbox://styles/mapbox/dark-v10'
+            });
+            var matchedMap = new mapboxgl.Map({
+                container: 'matched-map',
+                style: 'mapbox://styles/mapbox/light-v10'
+            });
+            beforeMap.on('load', function() {
+                var beforeDataUrl = './before.geojson';
+                map.addSource('before', { type: 'geojson', data: beforeDataUrl});
+            });
+            matchedMap.on('load', function() {
+                var matchedDataUrl = './matched.geojson';
+                map.addSource('matched', { type: 'geojson', data: matchedDataUrl});
+            });
+
+            window.compare = new mapboxgl.Compare(beforeMap, matchedMap, {});
+
+        </script>
+        <script src="" async defer></script>
+    </body>
+</html>
